@@ -1,0 +1,39 @@
+#problem 1
+x = list(range(30,61,5))
+print(x)
+
+x = sorted(x, reverse = True)
+print(x)
+
+x.append(65)
+print(sorted(x, reverse = True))
+
+#problem 2
+exlist = []
+print(exlist)
+exlist[0:21] = range(0,21)
+print(exlist)
+
+exlist.remove(0)
+print(exlist)
+
+print('length is',len(exlist))
+print('minimum value is',min(exlist))
+print('maximum value is',max(exlist))
+
+y = 0
+for i in range(len(exlist)):
+    y = y+exlist[i]
+print('sum of list =',y)
+
+
+#problem3
+weather = {'Sunny': 'play',
+           'Rainy': 'watch TV',
+           'Cloudy': 'walk'}
+
+for a , b in weather.items():
+    print('when',a, 'let us', b)
+    
+weather['Snowy'] = 'ski'
+print(weather)
