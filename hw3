@@ -1,0 +1,85 @@
+#example problem
+def funct1(x):
+    for n in range(num):
+        print(n)
+
+#problem 1 Q1
+marks ={'Andy':88, 'Amy':66, 'James': 90, 'Jules': 55, 'Arthur': 77}
+
+def find_grade(name):
+    for i in marks.keys():
+        if name in i:
+            print(marks[i])
+            break
+        elif name not in marks.keys():
+            print('cannot find name of student')
+            break
+find_grade('James')
+
+
+#Q2
+def average_funct(ur_dict):
+    j = 0
+    for i in ur_dict.keys():
+        j += ur_dict[i]
+    average = j/len(ur_dict)
+    return average
+print(average_funct(marks))
+
+
+#problem2
+def numbers(num):
+    n=1
+    while n < num:
+        print(n)
+        print(n**2)
+        n+= 1
+    print('greater than', num)
+numbers(8)
+ 
+ 
+#problem 3
+def adding(num):
+    sum_num = 0
+    n = 0
+    sum = 0
+    while n < num:
+        n = n+1
+        sum_num += n
+    print(sum_num)
+adding(4)
+
+#problem 4
+def adding2(num):
+    sum_num = 0
+    for i in range(num+1):
+        sum_num = sum_num + i
+        print(sum_num)
+adding2(3)
+     
+     
+#problem 5
+import statistics as stats
+def stat_1(x,y):
+    list_1=list(range(x,y+1))
+    print('sum=', sum(list_1), 'mean=', stats.mean(list_1),
+          'standard deviation=', stats.stdev(list_1))
+stat_1(1,20)
+
+
+#problem 6
+def minnimal(w,x,y,z):
+    min1 = w
+    if x < w:
+        min1 = x
+    elif y < x:
+        min1 = y
+    elif z < y:
+        min1 = z
+    print('minimum value =', min1)
+minnimal(4,2,3,1)
+
+#problem 7
+def strings(x,y,z):
+    print(f'{x}{y}{z}')
+strings('massa', 'chus', 'etts')
