@@ -1,0 +1,96 @@
+#problem 1
+import numpy as np
+q = np.array([[1,2,3,4], [5,6,7,8], [9,10,11,12]])
+print('dimension=',q.ndim)
+print('shape=', q.shape)
+
+for i in range(len(q)):
+    for j in q[i]:
+        print(j, end='')
+    print()
+    
+for i in range(len(q)):
+    for j in q[i]:
+        print(j, end='')
+    
+
+#problem 2
+import matplotlib.pyplot as plt
+x = np.array([1,2,3,4,5,6])
+y = np.array([5,6,7,8,9,10])
+plt.plot(x,y, color='y')
+plt.show()
+
+a= np.array([3,6,9,12])
+b=np.array([2,8,1,10])
+plt.plot(a,b, marker='*', ms=20, color='hotpink')
+plt.show()
+
+#problem 3
+j = np.array([2,4,6,14,10,12])
+plt.plot(j, color='r', marker='D', ms=10, mfc='g', mec='g', linestyle='--')
+plt.show()
+
+#problem 4
+x_vals = np.array([0,1,2,3])
+p = np.array([2,4,6,8])
+c = np.array([4,6,8,10])
+d = np.array([6,8,10,12])
+plt.plot(x_vals,p, x_vals,c, x_vals,d)
+plt.show()
+
+#problem 5
+marks = {'Andy':88, 'Amy':66, 'James':90, 'Jules': 55,'Arthur':77}
+ml=[]
+ml2 =[]
+for i in marks.values():
+    ml.append(i)
+for i in marks.keys():
+    ml2.append(i)
+grades = np.array(ml)
+names = np.array(ml2)
+colors=['limegreen','g','c','lightgreen','yellowgreen']
+
+plt.pie(grades, labels=names, colors=colors)
+plt.legend(title = 'Student Names', bbox_to_anchor=(1,1), loc = 'upper left')
+plt.title('Student Grades')
+plt.show()
+
+plt.bar(names,grades, color='lightblue')
+plt.title('Student Grades')
+plt.show()
+
+#problem 6
+x4=np.array([1,3,5,7])
+y4=np.array([2,4,4,6])
+z4=np.array([4,6,6,8])
+plt.subplot(2,3,1)
+plt.plot(x4,y4,x4,z4)
+plt.title('Graph 1')
+
+group=np.array(['day 1', 'day2', 'day 3', 'day 4'])
+plt.subplot(2,3,2)
+plt.bar(group,z4)
+plt.title('Graph 2')
+
+percent=np.array([25,50,15,10])
+plt.subplot(2,3,3)
+plt.pie(percent, labels=group)
+plt.title('Graph 3')
+
+plt.subplot(2,3,4)
+plt.plot(y4)
+plt.grid()
+plt.title('Graph 4')
+
+plt.subplot(2,3,5)
+plt.scatter(y4, percent)
+plt.title('Graph 5')
+
+plt.subplot(2,3,6)
+rand = np.random.normal(25,5,1000)
+plt.hist(rand)
+plt.title('Graph 6')
+
+plt.suptitle('2x3 Set of All Graphs')
+plt.show()
