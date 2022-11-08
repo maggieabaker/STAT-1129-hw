@@ -1,0 +1,207 @@
+#question one
+x = open('numbers.txt', 'r')
+b = x.read().splitlines()
+
+list1 = []
+for j in range(5):
+    for i in b[j]:
+        list1.append(i)
+
+for stuff in list1:
+    if stuff == ",": 
+        list1.remove(stuff)
+list2=[]        
+for p in list1:
+    list2.append(int(p))
+
+for p in range(len(list2)):
+    if list2[p] == 1:
+        if list2[p+1] == 0:
+            list2[p] = 10
+            list2[p+1] = ''
+counter = {}
+for k in range(11):
+    n=0 
+    for numbers in list2: 
+        if k == numbers:
+            n=n+1 
+    counter[k] = n 
+print("Count of integers:",counter)
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+number=[]
+count=[]
+for keys, values in counter.items():
+    number.append(keys)
+    count.append(values)
+number = np.array(number)
+count = np.array(count)
+
+plt.bar(number,count, color='limegreen', width=0.75)
+plt.title("Count of Integers in numbers.txt")
+plt.xlabel('Numbers')
+plt.ylabel('Frequency')
+plt.show()
+
+import json
+json_file = json.dumps(counter)
+
+with open('new_json_file.json', 'w') as y:
+  json.dump(counter, y)
+f = open('new_json_file.json', 'r')
+f.read()
+
+
+#question2
+import pandas as pd
+x = pd.read_csv('amazon-orders.csv')
+#print(x.head())
+var = pd.DataFrame(x)
+
+#subtotal
+subtotal1 = var["Subtotal"]
+list1 = []
+for i in range(len(subtotal1)):
+  list1.append(subtotal1[i])
+
+for i in range(len(list1)):
+  list1[i] = list1[i][1:len(list1[i])]
+subtotal=[]
+for i in list1:
+  subtotal.append(float(i))
+#print(subtotal)
+
+#total charged
+total_charged1 = var["Total Charged"]
+list3 = []
+for i in range(len(total_charged1)):
+  list3.append(total_charged1[i])
+
+for i in range(len(list3)):
+  list3[i] = list3[i][1:len(list3[i])]
+total_charged=[]
+for i in list3:
+  total_charged.append(float(i))
+#print(total_charged)
+
+#tax charged
+tax_charged1 = var["Tax Charged"]
+list5 = []
+for i in range(len(tax_charged1)):
+  list5.append(tax_charged1[i])
+
+for i in range(len(list5)):
+  list5[i] = list5[i][1:len(list5[i])]
+tax_charged=[]
+for i in list5:
+  tax_charged.append(float(i))
+#print(tax_charged)
+
+date = var["Order Date"]
+list7 =[]
+for i in range(len(date)):
+  list7.append(date[i])
+for i in range(len(list7)):
+    list7[i] = list7[i][0:2]
+months = list7
+
+list9 =[]
+for i in range(len(date)):
+  list9.append(date[i])
+for i in range(len(list9)):
+    list9[i] = list9[i][1] + list9[i][3:5]
+day_ordered =[]
+for i in list9:
+  day_ordered.append(int(i))
+
+date2 = var["Shipment Date"]
+list11 =[]
+for i in range(len(date2)):
+  list11.append(date2[i])
+for i in range(len(list11)):
+    list11[i] = list11[i][1] + list11[i][3:5]
+day_shipped = []
+for i in list11:
+  day_shipped.append(int(i))
+
+delay_date=[]
+for i in range(len(day_ordered)):
+  jk = day_shipped[i]
+  mn = day_ordered[i]
+  num = jk - mn
+  delay_date.append(num)
+
+
+max_total_charged = max(total_charged)
+print('max total charged =',max_total_charged)
+max_total_charged = min(total_charged)
+print('min total charged =',max_total_charged)
+import statistics as st
+m = st.mean(total_charged)
+print('mean total charged =', m)
+stdev = st.stdev(total_charged)
+print('standard deviation of total charged =', stdev)
+
+percent_tax = []
+for i in range(len(tax_charged)):
+    pt = tax_charged[i]/total_charged[i]
+    percent_tax.append(pt)
+mean_tax = st.mean(percent_tax)
+print('average percent tax charged =', mean_tax)
+
+var2 = pd.DataFrame(list(zip(subtotal, tax_charged, total_charged, months, delay_date)), columns = ["subtotal", "tax", "total charged", "month", "shipping delay"])
+xy = var2["total charged"].sum()
+
+var3 = var2.groupby("month").sum()
+total_charge_sums = var3["total charged"]
+tax_charge_sums = var3["tax"]
+subtotal_sums = var3["subtotal"]
+dif_months = var2['month'].unique()
+
+
+var4= var2.groupby("month").mean()
+ex2 = var4["total charged"]
+ex3 = var4["shipping delay"]
+ex4 = var4["tax"]
+print("monthly averages")
+print(var4)
+var5= var2.groupby("month").median()
+print("monthly medians")
+print(var5)
+var6= var2.groupby("month").max()
+print("monthly max values")
+print(var6)
+var7= var2.groupby("month").min()
+print("monthly min values")
+print(var7)
+var8= var2.groupby("month").std()
+print("monthly standard deviation")
+print(var8)
+
+import matplotlib.pyplot as plt
+import numpy as np
+month_names = np.array(['April', 'May', 'June','July'])
+clrs =['limegreen','g','c','lightgreen','yellowgreen']
+plt.pie(ex2, labels=month_names, colors=clrs)
+plt.title("Percent of Total Amazon Spendings per Month")
+plt.show()
+
+plt.bar(month_names,ex3, color='hotpink', width=0.75)
+plt.title("Average Delay Between Ordering and Shipping Dates per Month")
+plt.xlabel('Months')
+plt.ylabel('Delay (in Days)')
+plt.show()
+
+plt.plot(dif_months, tax_charge_sums, "D:c")
+plt.title("Sum of Tax on Purchased Items versus Months")
+plt.xlabel('Months')
+plt.ylabel('Dollars')
+plt.show()
+
+plt.plot(dif_months, subtotal_sums, marker='*', ms =10, color ='b')
+plt.title("Sum of Subtotal of Purchased Items versus Months")
+plt.xlabel('Months')
+plt.ylabel('Dollars')
+plt.show()
