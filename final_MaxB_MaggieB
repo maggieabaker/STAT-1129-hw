@@ -1,0 +1,89 @@
+def open_file():
+  x = input("enter a txt file name:")
+  x = str(x)
+  z = open(x,'r')
+  return z
+            
+def read_data(y):
+    read_file = y.read()
+    read_file = read_file.replace(",","").replace("-","").replace(".","").replace("'","")
+    read_file = read_file.lower()
+    read_file_list = read_file.split()
+    for i in read_file_list:
+        if len(i) == 1:
+            read_file_list.remove(i)
+    one_of_each_word = []
+    for i in read_file_list:
+        if i in one_of_each_word:
+            continue
+        else:
+            one_of_each_word.append(i)
+    word_dict = {}
+    for i in one_of_each_word:
+        word_dict[i] = None
+    
+    text_lines = read_file.splitlines()
+    for i in word_dict.keys():
+        list2 = []
+        for j in range(len(text_lines)):
+          list10 = text_lines[j].split()
+          for k in list10:
+            if i == k:
+              list2.append(j+1)
+              list2 = list(set(list2))
+          word_dict[i] = list2
+    return(word_dict) #dict w keys=words in doc and vals= line nums
+
+
+def cooccurance(d, e):
+    y=0
+    u=0
+    list1=[]
+    e = e.replace(",","").replace("-","").replace(".","").replace("'","")
+    e = e.lower()
+    words = e.split()
+    
+    for i in words:
+      if i not in d:
+        print("One or more words are not in the txt file. Please try again.")
+        return
+      for g in d[i]:
+          list1.append(g)
+    while y <= len(words):
+        for x in list1:
+            if list1.count(x) < len(words):
+                list1.remove(x)
+        y+=1
+    list1 = list(set(list1))
+    
+    
+    for i in range(len(words)):
+        if i == (len(words)-1):
+            print(words[i], end = " ")
+        else:
+            print(words[i], "and", end=" ")
+    
+    if len(list1) == 0:
+        print("do not cooccur on any lines")
+    elif len(words) == 1:
+      print("occurs on lines", end=" ")
+    else:
+        print("cooccur on lines", end=" ")
+        
+    for i in range(len(list1)):
+        if i == (len(list1)-1):
+            print(list1[i])
+        else:
+            print(list1[i], "and", end=" ")
+
+def main():
+    try:
+      b = read_data(open_file())
+    except:
+      main()
+      return
+    words = input("enter one or more words to find their cooccurance:")
+    cooccurance(b, words)
+    if __name__== "__main__" :
+        main()
+main()
